@@ -1,8 +1,10 @@
-module.exports = app => {
+const server = require("../server")
 
+module.exports = server => {
+  
 
   const router = require("express").Router()
-  const appHandler = require('../handler/app.handler')
+  const appHandler = require('../handlers/server.handler')
 
   // Schedules a bill or debt
   router.post("/bill", appHandler.scheduleBill)
@@ -20,6 +22,6 @@ module.exports = app => {
   router.delete("/bill/:id", appHandler.deleteBillById)
 
 
-  app.use('/api', router)
-
+  server.use('/api', router)
+  
 }
