@@ -1,36 +1,47 @@
-exports.scheduleBill = (req, res) => {
+const { Bills } = require('../../database/models/index')
+
+
+exports.scheduleBill = async (req, res) => {
 
     const data = req.body
-    return res.json(data)
+
+    const newBill = await Bills.create(data)
+    return res.json(newBill)
 
 }
 
-exports.listAllBills = (req, res) => {
+exports.listAllBills = async (req, res) => {
 
-    return res.json({ msg: "List bills..." })
+    const billsList = await Bills.findAll()
+    return res.json(billsList)
 
 }
 
-exports.detaillBillById = (req, res) => {
+exports.detaillBillById = async (req, res) => {
 
     const id = req.params.id
 
-    return res.json({ msg: `detail of bill #${id}` })
+    const billDetailById = await Bills.findOne({where: {id}})
+    return res.json(billDetailById)
 
 }
 
-exports.updateBillById = (req, res) => {
+exports.updateBillById = async (req, res) => {
 
     const id = req.params.id
 
-    return res.json({ msg: `update bill #${id}` })
+
+    const billData = req.body
+    const updateBillStatusById = await Bills.update(billData, {where: {id}})
+    return res.json({ msg: `updated bill #${id}` })
 
 }
 
-exports.deleteBillById = (req, res) => {
+exports.deleteBillById = async (req, res) => {
 
     const id = req.params.id
 
-    return res.json({ msg: `delete bill #${id}` })
+    const deleteBillById = await Bills.destroy({where: {id}})
+    return res.json({ msg: `deleted bill #${id}` })
 
 }
