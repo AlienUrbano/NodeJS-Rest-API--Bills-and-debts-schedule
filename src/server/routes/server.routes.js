@@ -2,7 +2,8 @@ module.exports = server => {
   
 
   const router = require("express").Router()
-  const appHandler = require('../handlers/server.handler')
+  const appHandler = require('../handlers/server.handler.js')
+  const UserHandler = require('../handlers/user.handler.js')
 
   // Schedules a bill or debt
   router.post("/bill", appHandler.scheduleBill)
@@ -13,11 +14,18 @@ module.exports = server => {
   // Details a bill or debt
   router.get("/bill/:id", appHandler.detaillBillById)
 
-  // update a bill or debt
+  // Update a bill or debt
   router.put("/bill/:id", appHandler.updateBillById)
 
-  // delete a bill or debt
+  // Delete a bill or debt
   router.delete("/bill/:id", appHandler.deleteBillById)
+
+
+  // User Routes
+
+  router.post("/signup", UserHandler.signUp)
+  
+  router.post("/signin", UserHandler.signIn)
 
 
   server.use('/api', router)
